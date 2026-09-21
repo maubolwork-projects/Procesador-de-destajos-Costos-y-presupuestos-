@@ -294,4 +294,160 @@ carpeta de trabajo.
 
 ---
 
+## Generación del ejecutable
 
+El proyecto utiliza PyInstaller para generar una aplicación ejecutable.
+
+Instalación:
+
+py -m PyInstaller --version
+
+Generación del ejecutable:
+
+py -m PyInstaller --onefile --name "Procesador_Destajos" pipeline_presupuestos.py
+
+El ejecutable se genera dentro de:
+
+dist/Procesador_Destajos.exe
+
+---
+
+## Ejecución como aplicación
+
+El usuario final no necesita ejecutar Python ni instalar las librerías del 
+proyecto.
+
+La estructura esperada de la carpeta de trabajo es:
+
+``` text
+Destajos/
+|
+|__ Procesador_Destajos.exe
+|
+|__ Destajo Obra A.xlsx
+|__ Destajo Obra B.xlsx
+|__ Destajo Obra C.xlsx
+|
+|__ Caratula de pptos.xlsx
+|__ file_control.db
+
+```
+
+El usuario únicamente debe colocar los archivos Excel de origen en la carpeta
+y ejecutar: `Procesador_destajos.exe`.
+
+El programa identificará automáticamente los archivos que aún no hayan sido
+procesados.
+
+---
+
+## Comportamiento del proceso
+### Primera ejecución
+
+```text
+Excel nuevos
+     ↓
+Procesamiento
+     ↓
+Caratula de pptos.xlsx
+     +
+file_control.db
+```
+
+### Ejecuciones posteriores
+
+```text
+
+Excel ya registrados
+        ↓
+     Omitir
+
+Excel nuevos
+        ↓
+    Procesar
+```
+
+### Archivo corregido
+
+```text
+
+Destajo A.xlsx
+       ↓
+Ya procesado
+
+Destajo A CORREGIDO.xlsx
+       ↓
+Nuevo hash
+       ↓
+Procesar
+```
+---
+## Pruebas realizadas
+
+El funcionamiento del proceso fue validado mediante pruebas funcionales 
+que cubren:
+
+- Primera ejecución con archivos nuevos.
+- Segunda ejecución sin archivos nuevos.
+- Incorporación de un archivo nuevo.
+- Procesamiento de archivos corregidos mediante cambio de nombre.
+- Exclusión del archivo consolidado de la lista de archivos de entrada.
+- Conversión de campos numéricos y cálculo de `IMPORTE`.
+
+Las pruebas funcionales fueron completadas satisfactoriamente antes de 
+generar el ejecutable.
+
+---
+
+## Tecnologías utilizadas
+
+- Python 3.14.6
+- Pandas
+- OpenPyXL
+- NumPy
+- SQLite
+- PyInstalller
+- Excel (.xlsx)
+
+---
+
+## Alcance actual
+
+El programa está diseñado específicamente para el formato de Excel utilizado 
+actualmente en el proceso de destajos y presupuestos.
+
+No se considera actualmente un sistema genérico de procesamiento de Excel.
+
+La estructura de extracción depende de:
+
+- Nombre de la hoja.
+- Posiciones específicas de las celdas.
+- Estructura de la tabla.
+- columnas definidas por el formato.
+
+Una modificación significativa del formato de origen puede requerir 
+actualizar el módulo de extracción.
+
+---
+
+## Próximas mejoras
+
+Posibles líneas de evolución del proyecto:
+
+- Incorporar validaciones de calidad de datos.
+- Mejorar los mensajes de ejecución.
+- Registrar estadísticas de cada carga.
+- Incorporar un reporte de archivos procesados.
+- Mejorar el manejo de errores.
+- Implementar una interfaz gráfica si el proceso lo requiere.
+- Integrar posteriormente el resultado con la arquitectura general de datos de la organización.
+
+---
+
+## Estado del proyecto
+
+### MVP funcional
+
+El proceso de extracción, transformación, consolidación y control de archivos se encuentra implementado y probado.
+
+El ejecutable `.exe` ha sido generado y validado en ejecución independiente del entorno de desarrollo.
