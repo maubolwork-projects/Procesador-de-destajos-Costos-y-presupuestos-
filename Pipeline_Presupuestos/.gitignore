@@ -1,0 +1,43 @@
+# Python
+
+**pycache**/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+
+.venv/
+venv/
+env/
+
+# PyInstaller
+
+build/
+dist/
+*.spec
+
+# Archivos generados por la aplicación
+
+file_control.db
+Caratula de pptos.xlsx
+
+# Archivos Excel de prueba / datos de usuario
+
+*.xlsx
+*.xls
+
+# Archivos temporales
+
+*.tmp
+*.temp
+~$*
+
+# IDE
+
+.vscode/
+.idea/
+
+# Sistema operativo
+
+Thumbs.db
+Desktop.ini
